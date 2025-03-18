@@ -408,117 +408,56 @@ const Admin = () => {
                     }
                     secondary={
                       <Box sx={{ mt: 1 }}>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          component="div"
-                        >
+                        <Box sx={{ mb: 2 }}>
                           <Box fontWeight="bold" mb={1}>
                             Customer Details:
                           </Box>
                           {booking.user ? (
                             <Box ml={2}>
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                component="div"
-                              >
+                              <Box>
                                 Name: {booking.user.firstName}{" "}
                                 {booking.user.lastName}
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                component="div"
-                              >
-                                Email: {booking.user.email}
-                              </Typography>
+                              </Box>
+                              <Box>Email: {booking.user.email}</Box>
                               {booking.user.phone && (
-                                <Typography
-                                  variant="body2"
-                                  color="text.secondary"
-                                  component="div"
-                                >
-                                  Phone: {booking.user.phone}
-                                </Typography>
+                                <Box>Phone: {booking.user.phone}</Box>
                               )}
                             </Box>
                           ) : (
-                            <Typography
-                              variant="body2"
-                              color="error"
-                              component="div"
-                              sx={{ ml: 2 }}
-                            >
+                            <Box sx={{ ml: 2, color: "error.main" }}>
                               Customer information not available
-                            </Typography>
+                            </Box>
                           )}
-                        </Typography>
+                        </Box>
 
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ mt: 2 }}
-                        >
+                        <Box sx={{ mt: 2 }}>
                           <Box fontWeight="bold" mb={1}>
                             Booking Details:
                           </Box>
                           <Box ml={2}>
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              component="div"
-                            >
+                            <Box>
                               From:{" "}
                               {new Date(booking.startDate).toLocaleDateString()}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              component="div"
-                            >
+                            </Box>
+                            <Box>
                               To:{" "}
                               {new Date(booking.endDate).toLocaleDateString()}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              component="div"
-                            >
-                              Total Price: ${booking.totalPrice}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              color="text.secondary"
-                              component="div"
-                            >
+                            </Box>
+                            <Box>Total Price: ${booking.totalPrice}</Box>
+                            <Box>
                               Booking Date:{" "}
                               {new Date(booking.createdAt).toLocaleString()}
-                            </Typography>
+                            </Box>
                           </Box>
-                        </Typography>
+                        </Box>
 
                         {booking.message && (
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            component="div"
-                            sx={{ mt: 2 }}
-                          >
+                          <Box sx={{ mt: 2 }}>
                             <Box fontWeight="bold" mb={1}>
                               Message:
                             </Box>
-                            <Box ml={2}>
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                component="div"
-                              >
-                                {booking.message}
-                              </Typography>
-                            </Box>
-                          </Typography>
+                            <Box ml={2}>{booking.message}</Box>
+                          </Box>
                         )}
                       </Box>
                     }
@@ -608,37 +547,12 @@ const Admin = () => {
                     }
                     secondary={
                       <Box sx={{ mt: 1 }}>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          component="div"
-                        >
-                          Email: {message.email}
-                        </Typography>
-                        {message.phone && (
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            component="div"
-                          >
-                            Phone: {message.phone}
-                          </Typography>
-                        )}
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ mt: 1 }}
-                        >
-                          Message: {message.message}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          component="div"
-                        >
+                        <Box>Email: {message.email}</Box>
+                        {message.phone && <Box>Phone: {message.phone}</Box>}
+                        <Box sx={{ mt: 1 }}>Message: {message.message}</Box>
+                        <Box>
                           Sent: {new Date(message.createdAt).toLocaleString()}
-                        </Typography>
+                        </Box>
                       </Box>
                     }
                   />

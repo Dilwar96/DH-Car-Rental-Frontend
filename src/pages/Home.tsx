@@ -41,11 +41,46 @@ const Home = () => {
   useEffect(() => {
     const fetchFeaturedCars = async () => {
       try {
+        console.log("Fetching cars from:", `${config.apiUrl}/api/cars`);
         const response = await axios.get(`${config.apiUrl}/api/cars`);
+        console.log("API Response:", response.data);
+
+        if (!response.data || response.data.length === 0) {
+          console.log("No cars data received");
+          // If no cars are available, use static featured cars
+          setFeaturedCars(
+            staticFeaturedCars.map((car) => ({
+              _id: car.id.toString(),
+              name: car.name,
+              brand: car.brand,
+              image: car.image,
+              price: car.price,
+            }))
+          );
+          return;
+        }
+
         const shuffled = response.data.sort(() => 0.5 - Math.random());
         setFeaturedCars(shuffled.slice(0, 3));
       } catch (error) {
         console.error("Error fetching featured cars:", error);
+        if (axios.isAxiosError(error)) {
+          console.error("Axios error details:", {
+            message: error.message,
+            status: error.response?.status,
+            data: error.response?.data,
+          });
+        }
+        // Fallback to static featured cars on error
+        setFeaturedCars(
+          staticFeaturedCars.map((car) => ({
+            _id: car.id.toString(),
+            name: car.name,
+            brand: car.brand,
+            image: car.image,
+            price: car.price,
+          }))
+        );
       }
     };
 
