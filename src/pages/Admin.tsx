@@ -388,109 +388,136 @@ const Admin = () => {
           <List>
             {bookingsData.map((booking) => (
               <React.Fragment key={booking._id}>
-                <ListItem>
-                  <ListItemText
-                    primary={
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                      >
-                        <DirectionsCarIcon />
-                        <Typography variant="subtitle1" component="span">
-                          {booking.car?.brand} {booking.car?.modelName}
-                        </Typography>
-                        <Chip
-                          label={booking.status}
-                          color={getStatusColor(booking.status)}
-                          size="small"
-                          sx={{ ml: 1 }}
-                        />
+                <ListItem
+                  sx={{
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: "flex-start",
+                    py: 2,
+                  }}
+                >
+                  <Box sx={{ width: "100%" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mb: 2,
+                      }}
+                    >
+                      <DirectionsCarIcon />
+                      <Box component="span" sx={{ fontSize: "1.1rem" }}>
+                        {booking.car?.brand} {booking.car?.modelName}
                       </Box>
-                    }
-                    secondary={
-                      <Box sx={{ mt: 1 }}>
-                        <Box sx={{ mb: 2 }}>
-                          <Box fontWeight="bold" mb={1}>
-                            Customer Details:
-                          </Box>
-                          {booking.user ? (
-                            <Box ml={2}>
-                              <Box>
-                                Name: {booking.user.firstName}{" "}
-                                {booking.user.lastName}
+                      <Chip
+                        label={booking.status}
+                        color={getStatusColor(booking.status)}
+                        size="small"
+                        sx={{ ml: 1 }}
+                      />
+                    </Box>
+
+                    <Box sx={{ mt: 1 }}>
+                      {/* Customer Details Section */}
+                      <Box sx={{ mb: 2 }}>
+                        <Box component="div" sx={{ fontWeight: "bold", mb: 1 }}>
+                          Customer Details:
+                        </Box>
+                        {booking.user ? (
+                          <Box sx={{ ml: 2 }}>
+                            <Box component="div" sx={{ mb: 0.5 }}>
+                              Name: {booking.user.firstName}{" "}
+                              {booking.user.lastName}
+                            </Box>
+                            <Box component="div" sx={{ mb: 0.5 }}>
+                              Email: {booking.user.email}
+                            </Box>
+                            {booking.user.phone && (
+                              <Box component="div">
+                                Phone: {booking.user.phone}
                               </Box>
-                              <Box>Email: {booking.user.email}</Box>
-                              {booking.user.phone && (
-                                <Box>Phone: {booking.user.phone}</Box>
-                              )}
-                            </Box>
-                          ) : (
-                            <Box sx={{ ml: 2, color: "error.main" }}>
-                              Customer information not available
-                            </Box>
-                          )}
-                        </Box>
-
-                        <Box sx={{ mt: 2 }}>
-                          <Box fontWeight="bold" mb={1}>
-                            Booking Details:
+                            )}
                           </Box>
-                          <Box ml={2}>
-                            <Box>
-                              From:{" "}
-                              {new Date(booking.startDate).toLocaleDateString()}
-                            </Box>
-                            <Box>
-                              To:{" "}
-                              {new Date(booking.endDate).toLocaleDateString()}
-                            </Box>
-                            <Box>Total Price: ${booking.totalPrice}</Box>
-                            <Box>
-                              Booking Date:{" "}
-                              {new Date(booking.createdAt).toLocaleString()}
-                            </Box>
-                          </Box>
-                        </Box>
-
-                        {booking.message && (
-                          <Box sx={{ mt: 2 }}>
-                            <Box fontWeight="bold" mb={1}>
-                              Message:
-                            </Box>
-                            <Box ml={2}>{booking.message}</Box>
+                        ) : (
+                          <Box sx={{ ml: 2, color: "error.main" }}>
+                            Customer information not available
                           </Box>
                         )}
                       </Box>
-                    }
-                  />
-                  <ListItemSecondaryAction>
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      <FormControl size="small" sx={{ minWidth: 120 }}>
-                        <Select
-                          value={booking.status}
-                          onChange={(e) =>
-                            handleBookingStatusChange(
-                              booking._id,
-                              e.target.value as
-                                | "pending"
-                                | "confirmed"
-                                | "cancelled"
-                            )
-                          }
-                        >
-                          <MenuItem value="pending">Pending</MenuItem>
-                          <MenuItem value="confirmed">Confirm</MenuItem>
-                          <MenuItem value="cancelled">Cancel</MenuItem>
-                        </Select>
-                      </FormControl>
-                      <IconButton
-                        edge="end"
-                        color="error"
-                        onClick={() => handleDeleteBooking(booking._id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+
+                      {/* Booking Details Section */}
+                      <Box sx={{ mb: 2 }}>
+                        <Box component="div" sx={{ fontWeight: "bold", mb: 1 }}>
+                          Booking Details:
+                        </Box>
+                        <Box sx={{ ml: 2 }}>
+                          <Box component="div" sx={{ mb: 0.5 }}>
+                            From:{" "}
+                            {new Date(booking.startDate).toLocaleDateString()}
+                          </Box>
+                          <Box component="div" sx={{ mb: 0.5 }}>
+                            To: {new Date(booking.endDate).toLocaleDateString()}
+                          </Box>
+                          <Box component="div" sx={{ mb: 0.5 }}>
+                            Total Price: ${booking.totalPrice}
+                          </Box>
+                          <Box component="div">
+                            Booking Date:{" "}
+                            {new Date(booking.createdAt).toLocaleString()}
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Message Section */}
+                      {booking.message && (
+                        <Box>
+                          <Box
+                            component="div"
+                            sx={{ fontWeight: "bold", mb: 1 }}
+                          >
+                            Message:
+                          </Box>
+                          <Box component="div" sx={{ ml: 2 }}>
+                            {booking.message}
+                          </Box>
+                        </Box>
+                      )}
                     </Box>
-                  </ListItemSecondaryAction>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                      mt: { xs: 2, sm: 0 },
+                      width: { xs: "100%", sm: "auto" },
+                      justifyContent: { xs: "flex-end", sm: "flex-end" },
+                    }}
+                  >
+                    <FormControl size="small" sx={{ minWidth: 120 }}>
+                      <Select
+                        value={booking.status}
+                        onChange={(e) =>
+                          handleBookingStatusChange(
+                            booking._id,
+                            e.target.value as
+                              | "pending"
+                              | "confirmed"
+                              | "cancelled"
+                          )
+                        }
+                      >
+                        <MenuItem value="pending">Pending</MenuItem>
+                        <MenuItem value="confirmed">Confirm</MenuItem>
+                        <MenuItem value="cancelled">Cancel</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDeleteBooking(booking._id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
                 </ListItem>
                 <Divider />
               </React.Fragment>
@@ -522,41 +549,65 @@ const Admin = () => {
                 <ListItem
                   sx={{
                     bgcolor: message.read ? "transparent" : "action.hover",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: "flex-start",
+                    py: 2,
                   }}
                 >
-                  <ListItemText
-                    primary={
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
-                      >
-                        <EmailIcon
-                          color={message.read ? "disabled" : "primary"}
+                  <Box sx={{ width: "100%" }}>
+                    {/* Message Header */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mb: 1,
+                      }}
+                    >
+                      <EmailIcon
+                        color={message.read ? "disabled" : "primary"}
+                      />
+                      <Box component="span" sx={{ fontSize: "1.1rem" }}>
+                        {message.name}
+                      </Box>
+                      {!message.read && (
+                        <Chip
+                          label="New"
+                          color="primary"
+                          size="small"
+                          sx={{ ml: 1 }}
                         />
-                        <Typography variant="subtitle1" component="span">
-                          {message.name}
-                        </Typography>
-                        {!message.read && (
-                          <Chip
-                            label="New"
-                            color="primary"
-                            size="small"
-                            sx={{ ml: 1 }}
-                          />
-                        )}
+                      )}
+                    </Box>
+
+                    {/* Message Details */}
+                    <Box sx={{ mt: 1, color: "text.secondary" }}>
+                      <Box component="div" sx={{ mb: 0.5 }}>
+                        Email: {message.email}
                       </Box>
-                    }
-                    secondary={
-                      <Box sx={{ mt: 1 }}>
-                        <Box>Email: {message.email}</Box>
-                        {message.phone && <Box>Phone: {message.phone}</Box>}
-                        <Box sx={{ mt: 1 }}>Message: {message.message}</Box>
-                        <Box>
-                          Sent: {new Date(message.createdAt).toLocaleString()}
+                      {message.phone && (
+                        <Box component="div" sx={{ mb: 0.5 }}>
+                          Phone: {message.phone}
                         </Box>
+                      )}
+                      <Box component="div" sx={{ mb: 0.5 }}>
+                        Message: {message.message}
                       </Box>
-                    }
-                  />
-                  <ListItemSecondaryAction>
+                      <Box component="div">
+                        Sent: {new Date(message.createdAt).toLocaleString()}
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: 1,
+                      mt: { xs: 2, sm: 0 },
+                      width: { xs: "100%", sm: "auto" },
+                      justifyContent: { xs: "flex-end", sm: "flex-end" },
+                    }}
+                  >
                     {!message.read && (
                       <Button
                         variant="outlined"
@@ -566,7 +617,7 @@ const Admin = () => {
                         Mark as Read
                       </Button>
                     )}
-                  </ListItemSecondaryAction>
+                  </Box>
                 </ListItem>
                 <Divider />
               </React.Fragment>
